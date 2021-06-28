@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserBody, GetUserQuery } from './interface';
 
@@ -12,7 +12,7 @@ export class UserController {
   }
 
   @Get('user/:id')
-  public getUser(@Query() { id }: GetUserQuery) {
+  public getUser(@Param() { id }: GetUserQuery) {
     return this.userService.getUser(id);
   }
 
@@ -22,7 +22,7 @@ export class UserController {
   }
 
   @Delete('user/:id')
-  public deleteUser(@Query() { id }: GetUserQuery) {
+  public deleteUser(@Param() { id }: GetUserQuery) {
     return this.userService.deleteUser(id);
   }
 }

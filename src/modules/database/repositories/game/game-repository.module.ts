@@ -2,7 +2,7 @@ import { ClassProvider, Module } from '@nestjs/common';
 import { GameRepository } from './game-repository';
 
 const gameRepositoryProvider: ClassProvider = {
-  provide: 'USER_REPOSITORY',
+  provide: 'GAME_REPOSITORY',
   useClass: GameRepository,
 };
 
