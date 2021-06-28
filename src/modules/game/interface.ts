@@ -1,4 +1,4 @@
-import { IsDefined, IsNumber, IsUUID, Min } from 'class-validator';
+import { IsDefined, IsNumber, IsUUID, Max, Min } from 'class-validator';
 
 export class GetGameQuery {
   @IsUUID()
@@ -24,6 +24,6 @@ export class MakeMoveBody {
   @IsNumber()
   @IsDefined()
   @Min(1)
-  @Min(9)
+  @Max(9)
   public readonly position!: number;
 }
