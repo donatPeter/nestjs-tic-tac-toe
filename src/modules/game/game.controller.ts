@@ -1,6 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { GameService } from './game.service';
-import { CreateGameBody, GetGameQuery } from './interface';
+import { CreateGameBody, GetGameQuery, MakeMoveBody } from './interface';
 
 @Controller()
 export class GameController {
@@ -19,5 +27,13 @@ export class GameController {
   @Delete('game/:id')
   public deleteGame(@Param() { id }: GetGameQuery) {
     return this.service.deleteGame(id);
+  }
+
+  @Put('game/:id')
+  public makeMove(
+    @Param() { id }: GetGameQuery,
+    @Body() { userId, position }: MakeMoveBody,
+  ) {
+    return this.service.makeMove(id, userId, position);
   }
 }
