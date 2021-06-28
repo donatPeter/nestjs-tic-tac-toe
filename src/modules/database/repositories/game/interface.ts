@@ -1,4 +1,5 @@
 export interface IGame {
-  id: string;
   moves: string[];
+  userOneId: string;
+  userTwoId: string;
 }

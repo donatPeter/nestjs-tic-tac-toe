@@ -1,19 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { IGame } from './interface';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class GameRepository {
-  private users: Map<string, IGame> = new Map();
+  private games: Map<string, IGame> = new Map();
 
   public findOne(id: string) {
-    return this.users.get(id);
-  }
-
-  public find() {
-    return this.users;
+    return this.games.get(id);
   }
 
   public delete(id: string) {
-    return this.users.delete(id);
+    this.games.delete(id);
+    return;
+  }
+
+  public save(userOneId: string, userTwoId: string) {
+    const id = uuidv4();
+    this.games.set(id, { moves: [], userOneId, userTwoId });
+    return id;
   }
 }

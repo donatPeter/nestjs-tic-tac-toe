@@ -5,3 +5,13 @@ export class GetGameQuery {
   @IsDefined()
   public readonly id!: string;
 }
+
+export class CreateGameBody {
+  @IsUUID()
+  @IsDefined()
+  public readonly userOneId!: string;
+
+  @IsUUID()
+  @IsDefined()
+  public readonly userTwoId!: string;
+}

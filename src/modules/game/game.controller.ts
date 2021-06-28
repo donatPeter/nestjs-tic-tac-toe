@@ -1,6 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { GameService } from './game.service';
-import { GetGameQuery } from './interface';
+import { CreateGameBody, GetGameQuery } from './interface';
 
 @Controller()
 export class GameController {
@@ -9,5 +9,15 @@ export class GameController {
   @Get('game/:id')
   public getGame(@Param() { id }: GetGameQuery) {
     return this.service.getGame(id);
+  }
+
+  @Post('game')
+  public createGame(@Body() { userOneId, userTwoId }: CreateGameBody) {
+    return this.service.createGame(userOneId, userTwoId);
+  }
+
+  @Delete('game/:id')
+  public deleteGame(@Param() { id }: GetGameQuery) {
+    return this.service.deleteGame(id);
   }
 }
