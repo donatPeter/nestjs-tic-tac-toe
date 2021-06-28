@@ -44,7 +44,7 @@ export class GameService {
    */
   public makeMove(gameId: string, userId: string, position: number) {
     const game = this.gameRepository.findOne(gameId);
-    GameService.validateMove(game, userId);
+    GameService.validateMove(game, userId, position);
 
     // make the intended move
     this.gameRepository.update(gameId, { userId, position });
@@ -67,16 +67,17 @@ export class GameService {
    * Validate if the intended move is doable
    * @param game
    * @param userId
+   * @param position
    * @private
    */
-  private static validateMove(game: IGame, userId: string) {
+  private static validateMove(game: IGame, userId: string, position: number) {
     // if the game is not found throw an exception
     if (!game) {
-      throw new NotFoundException();
+      throw new NotFoundException('GAME_NOT_FOUND');
     }
     // if the userId in the request is not one of the registered users on the game
-    if (game.userOneId !== userId || game.userTwoId !== userId) {
-      throw new BadRequestException();
+    if (game.userOneId !== userId && game.userTwoId !== userId) {
+      throw new BadRequestException('INVALID_PLAYER');
     }
     // if not userOne would start
     if (!game.moves.length && game.userOneId !== userId) {
@@ -92,6 +93,10 @@ export class GameService {
       game.moves[game.moves.length - 1].userId === userId
     ) {
       throw new BadRequestException('ITS_NOT_YOUR_TURN');
+    }
+    // if the intended position is already taken
+    if (game.moves.some((move) => move.position === position)) {
+      throw new BadRequestException('POSITION_ALREADY_TAKEN');
     }
   }
 
