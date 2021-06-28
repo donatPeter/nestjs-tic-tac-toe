@@ -86,6 +86,13 @@ export class GameService {
     if (game.status !== 'IN_GAME') {
       throw new BadRequestException('GAME_IS_ALREADY_OVER');
     }
+    // if the last move was make by the same player
+    if (
+      game.moves.length &&
+      game.moves[game.moves.length - 1].userId === userId
+    ) {
+      throw new BadRequestException('ITS_NOT_YOUR_TURN');
+    }
   }
 
   /**
